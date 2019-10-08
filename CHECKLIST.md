@@ -35,7 +35,7 @@ This list uses the following conventions:
 *   1.1.7. **Do not** place public implementation classes in the API package [explain](#117-do-not-place-public-implementation-classes-in-the-api-package)
 *   1.1.8. **Do not** create dependencies between callers and implementation classes [explain](#118-do-not-create-dependencies-between-callers-and-implementation-classes)
 *   1.1.9. **Do not** place unrelated APIs into the same package [explain](#119-do-not-place-unrelated-apis-into-the-same-package)
-*   1.1.10. **Do not** place API and SPI into the same package [explain](#1110-do-not-place-api-and-spi-into-the-same-package)
+*   1.1.10. **Avoid** relying on documentation to control evolution of API or SPI [explain](#1110-avoid-relying-on-documentation-to-control-evolution-of-api-or-spi)
 *   1.1.11. **Do not** move or rename the package of an already released public API [explain](#1111-do-not-move-or-rename-the-package-of-an-already-released-public-api)
 
 ### 1.2. Naming
@@ -531,20 +531,11 @@ None. No matter how challenging it feels to avoid implementation types in public
 
 [Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/) and [Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/). Each API deserves its own package, so that developers can focus on the features they need, without any distracting clutter. The most frequently heard argument for putting several APIs into the same package is their small size. This argument fails to consider that APIs evolve, and what is a small package today can easily become a very large package containing a hodge-podge of unrelated features over time. The java.util package is the best know example.
 
-### 1.1.10.  **Do not** place API and SPI into the same package
+### 1.1.10.  **Avoid** relying on documentation to control evolution of API or SPI
 
-**Rationale:**
-
-[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/),
-[Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/)
-and [Evolution](https://theamiableapi.com/2011/10/18/api-design-best-practice-plan-for-evolution/).
-
-APIs and SPIs serve different purpose, are used differently, and evolve differently. APIs expose functionality to use.
-SPIs define functionality to implement and may offer certain facilities to help implement it. A related API and SPI pair
-may share some of the simpler public support types leading you to believe they belong in the same package. They don’t.
-Put the shared support types into the API package (making it the self-contained package) and make the SPI package depend
-on it (making it a bit more complex to use). This is in line with the expectations of most developers, that APIs are
-easier to use than SPIs.
+SPI implementors can always call their own code, therefore treating it like API. This should be encouraged when they
+want to test their SPI. The evolution path of SPI or API should be constrained only by the compiler, not documentation.
+Therefore if you want to provide polymorphic API without upgrading it to SPI, you need to hide the constructor.
 
 ### 1.1.11.  **Do not** move or rename the package of an already released public API
 

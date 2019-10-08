@@ -535,7 +535,16 @@ None. No matter how challenging it feels to avoid implementation types in public
 
 **Rationale:**
 
-[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/), [Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/) and [Evolution](https://theamiableapi.com/2011/10/18/api-design-best-practice-plan-for-evolution/). APIs and SPIs serve different purpose, are used differently, and evolve differently. APIs expose functionality to use. SPIs define functionality to implement and may offer certain facilities to help implement it. A related API and SPI pair may share some of the simpler public support types leading you to believe they belong in the same package. They don’t. Put the shared support types into the API package (making it the self-contained package) and make the SPI package depend on it (making it a bit more complex to use). This is in line with the expectations of most developers, that APIs are easier to use than SPIs.
+[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/),
+[Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/)
+and [Evolution](https://theamiableapi.com/2011/10/18/api-design-best-practice-plan-for-evolution/).
+
+APIs and SPIs serve different purpose, are used differently, and evolve differently. APIs expose functionality to use.
+SPIs define functionality to implement and may offer certain facilities to help implement it. A related API and SPI pair
+may share some of the simpler public support types leading you to believe they belong in the same package. They don’t.
+Put the shared support types into the API package (making it the self-contained package) and make the SPI package depend
+on it (making it a bit more complex to use). This is in line with the expectations of most developers, that APIs are
+easier to use than SPIs.
 
 ### 1.1.11.  **Do not** move or rename the package of an already released public API
 

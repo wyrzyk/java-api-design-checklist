@@ -348,7 +348,7 @@ This list uses the following conventions:
 
 **Rationale:**
 
-[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/), [Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/), [Sefety](https://theamiableapi.com/2011/10/12/api-design-best-practice-make-it-safe/) and [Evolution](https://theamiableapi.com/2011/10/18/api-design-best-practice-plan-for-evolution/). Java only supports public and package scoped classes. You should obviously never mix public implementation classes with APIs (see [checklist item](#117-do-not-place-public-implementation-classes-in-the-api-package)). You can only place package scoped classes into API packages if you are certain they will be never needed in any other (implementation) package. Otherwise developers may inadvertently change their access to public, breaking the encapsulation of the API.
+[Simplicity], [Consistency], [Safety] and [Evolution]. Java only supports public and package scoped classes. You should obviously never mix public implementation classes with APIs (see [checklist item](#117-do-not-place-public-implementation-classes-in-the-api-package)). You can only place package scoped classes into API packages if you are certain they will be never needed in any other (implementation) package. Otherwise developers may inadvertently change their access to public, breaking the encapsulation of the API.
 
 More importantly, Java module systems like OSGi use package boundaries for additional class loader isolation, dependency management and versioning. You won’t be able to take advantage of it if you combine API and implementation into one package.
 
@@ -387,7 +387,7 @@ Very rarely, a small number of package scoped classes are useful when a separate
 
 **Rationale:**
 
-[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/) and [Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/). Java packages are organized into a hierarchy (tree). By convention, packages close to the base of this hierarchy are generic or more frequently used (ex. java.util) while deeper nested packages are more specialized or less frequently used (ex. java.util.concurrent.locks). API packages typically being the only public part of a component, service, or application are expected to be in the root namespace or as close as possible to the root namespace (package) reserved for the said component, service or application. Implementation packages should be at a lower level, preferably under the API package. Developers scanning the package structure for the API should be able to locate it quickly, without the need to scan through uninteresting implementation packages.
+[Simplicity] and [Consistency]. Java packages are organized into a hierarchy (tree). By convention, packages close to the base of this hierarchy are generic or more frequently used (ex. java.util) while deeper nested packages are more specialized or less frequently used (ex. java.util.concurrent.locks). API packages typically being the only public part of a component, service, or application are expected to be in the root namespace or as close as possible to the root namespace (package) reserved for the said component, service or application. Implementation packages should be at a lower level, preferably under the API package. Developers scanning the package structure for the API should be able to locate it quickly, without the need to scan through uninteresting implementation packages.
 
 **Do this:**
 
@@ -428,7 +428,7 @@ For example, a streaming API may have two packages: com.company.streaming.audio 
 
 **Rationale:**
 
-[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/). Packages containing many classes can be difficult to understand and use. If some of the classes are used infrequently or only in specific scenarios, you should move them into their own package. When you do this, you are helping users determine which classes they need for which use cases. They will find the API easier to use if they do not need to understand every single class before they can start working.
+[Simplicity]. Packages containing many classes can be difficult to understand and use. If some of the classes are used infrequently or only in specific scenarios, you should move them into their own package. When you do this, you are helping users determine which classes they need for which use cases. They will find the API easier to use if they do not need to understand every single class before they can start working.
 
 **Exceptions:**
 
@@ -440,7 +440,7 @@ You should never break up APIs into packages based on design or implementation c
 
 **Rationale:**
 
-[Safety](https://theamiableapi.com/2011/10/12/api-design-best-practice-make-it-safe/) and [Evolution](https://theamiableapi.com/2011/10/18/api-design-best-practice-plan-for-evolution/). This separation helps differentiate between build time and run time dependencies. Only the API classes are needed to build the client . Both API and implementation classes are needed to run it. By not requiring Java archives containing public implementation classes on the classpath at build time, you can further reduce (but cannot eliminate) the risk of clients inadvertently accessing implementation classes. This may cause unexpected errors and may break clients when the implementation changes.
+[Safety] and [Evolution]. This separation helps differentiate between build time and run time dependencies. Only the API classes are needed to build the client . Both API and implementation classes are needed to run it. By not requiring Java archives containing public implementation classes on the classpath at build time, you can further reduce (but cannot eliminate) the risk of clients inadvertently accessing implementation classes. This may cause unexpected errors and may break clients when the implementation changes.
 
 **Exceptions:**
 
@@ -452,7 +452,7 @@ If you use a Java module system like OSGi, you can package API and implementatio
 
 **Rationale:**
 
-[Evolution](https://theamiableapi.com/2011/10/18/api-design-best-practice-plan-for-evolution/). Strong internal dependencies will make it more difficult to change the implementation without making non-backwards compatible changes to either API signature or its behavior. For example, if you tightly couple a simple generic storage API with its implementation using JDBC and RDBMS, it may be prove challenging to re-implement the same API later on top of a file system or an LDAP directory service. Ideally, an API should be a separate layer on top of its implementation, not simply the public part of the implementation.
+[Evolution]. Strong internal dependencies will make it more difficult to change the implementation without making non-backwards compatible changes to either API signature or its behavior. For example, if you tightly couple a simple generic storage API with its implementation using JDBC and RDBMS, it may be prove challenging to re-implement the same API later on top of a file system or an LDAP directory service. Ideally, an API should be a separate layer on top of its implementation, not simply the public part of the implementation.
 
 Imagine an API package which defines just Java interfaces and a few static factory methods to return implementations of these interfaces. All the implementation classes reside in separate packages. With this design, it is trivial to swap implementations (even at runtime) by changing the classes the factory methods return. Although we do not advocate this interface-only design approach to APIs (there are many other design considerations), the number of explicit dependencies between API and implementation packages (coupling) is a good predictor of how difficult it will be to evolve APIs independently from their implementation.
 
@@ -464,7 +464,7 @@ Minimizing implementation dependencies requires more code and the use of appropr
 
 **Rationale:**
 
-[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/). Uses cases which import classes from multiple packages are more complex and harder to understand. Ideally, all API classes needed should come from a single package. Never break up API packages based on implementation needs.
+[Simplicity]. Uses cases which import classes from multiple packages are more complex and harder to understand. Ideally, all API classes needed should come from a single package. Never break up API packages based on implementation needs.
 
 **Do this:**
 
@@ -495,13 +495,13 @@ Large APIs should be breaken up into smaller packages based on usage patterns. S
 
 **Rationale:**
 
-[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/), [Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/), [Safety](https://theamiableapi.com/2011/10/12/api-design-best-practice-make-it-safe/) and [Evolution](https://theamiableapi.com/2011/10/18/api-design-best-practice-plan-for-evolution/). Users will have difficulty identifying which classes are part of the API and there is a big risk that they will inadvertently call public methods on implementation classes leading to unexpected errors. The client code may also stop working if implementation changes in later releases.
+[Simplicity], [Consistency], [Safety] and [Evolution]. Users will have difficulty identifying which classes are part of the API and there is a big risk that they will inadvertently call public methods on implementation classes leading to unexpected errors. The client code may also stop working if implementation changes in later releases.
 
 ### 1.1.8.    **Do not** create dependencies between callers and implementation classes
 
 **Rationale:**
 
-[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/), [Safety](https://theamiableapi.com/2011/10/12/api-design-best-practice-make-it-safe/) and [Evolution](https://theamiableapi.com/2011/10/18/api-design-best-practice-plan-for-evolution/). It defeats the purpose of separating API and implementation if callers are either forced or coaxed into importing implementation classes into their code. It is not enough to have implementation classes in separate packages. You cannot use them as the type of public fields, parameters, return values or exceptions either. Even if you put a “Do not use” or “Implementation use only” warning on such fields and methods, callers will still use them. It is much better not to have them at all.
+[Simplicity], [Safety] and [Evolution]. It defeats the purpose of separating API and implementation if callers are either forced or coaxed into importing implementation classes into their code. It is not enough to have implementation classes in separate packages. You cannot use them as the type of public fields, parameters, return values or exceptions either. Even if you put a “Do not use” or “Implementation use only” warning on such fields and methods, callers will still use them. It is much better not to have them at all.
 
 **Don’t do this:**
 
@@ -529,19 +529,19 @@ None. No matter how challenging it feels to avoid implementation types in public
 
 **Rationale:**
 
-[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/) and [Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/). Each API deserves its own package, so that developers can focus on the features they need, without any distracting clutter. The most frequently heard argument for putting several APIs into the same package is their small size. This argument fails to consider that APIs evolve, and what is a small package today can easily become a very large package containing a hodge-podge of unrelated features over time. The java.util package is the best know example.
+[Simplicity] and [Consistency]. Each API deserves its own package, so that developers can focus on the features they need, without any distracting clutter. The most frequently heard argument for putting several APIs into the same package is their small size. This argument fails to consider that APIs evolve, and what is a small package today can easily become a very large package containing a hodge-podge of unrelated features over time. The java.util package is the best know example.
 
 ### 1.1.10.  **Do not** place API and SPI into the same package
 
 **Rationale:**
 
-[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/), [Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/) and [Evolution](https://theamiableapi.com/2011/10/18/api-design-best-practice-plan-for-evolution/). APIs and SPIs serve different purpose, are used differently, and evolve differently. APIs expose functionality to use. SPIs define functionality to implement and may offer certain facilities to help implement it. A related API and SPI pair may share some of the simpler public support types leading you to believe they belong in the same package. They don’t. Put the shared support types into the API package (making it the self-contained package) and make the SPI package depend on it (making it a bit more complex to use). This is in line with the expectations of most developers, that APIs are easier to use than SPIs.
+[Simplicity], [Consistency] and [Evolution]. APIs and SPIs serve different purpose, are used differently, and evolve differently. APIs expose functionality to use. SPIs define functionality to implement and may offer certain facilities to help implement it. A related API and SPI pair may share some of the simpler public support types leading you to believe they belong in the same package. They don’t. Put the shared support types into the API package (making it the self-contained package) and make the SPI package depend on it (making it a bit more complex to use). This is in line with the expectations of most developers, that APIs are easier to use than SPIs.
 
 ### 1.1.11.  **Do not** move or rename the package of an already released public API
 
 **Rationale:**
 
-[Evolution](https://theamiableapi.com/2011/10/18/api-design-best-practice-plan-for-evolution/). Changing the fully qualified name of the API package breaks both binary and source backwards compatibility with existing clients.
+[Evolution]. Changing the fully qualified name of the API package breaks both binary and source backwards compatibility with existing clients.
 
 **Exceptions:**
 
@@ -553,7 +553,7 @@ None
 
 **Rationale:**
 
-[Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/). The long-established Java convention is to generate a unique root package name by reversing the internet domain name of the developing organization. When the organization owns multiple internet domain names, the official domain name is used.
+[Consistency]. The long-established Java convention is to generate a unique root package name by reversing the internet domain name of the developing organization. When the organization owns multiple internet domain names, the official domain name is used.
 
 **Exceptions:**
 
@@ -565,7 +565,7 @@ If the package naming is changed (for example as part of product rebranding), a 
 
 **Rationale:**
 
-[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/) and [Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/). Developers like short API package names and ideally you should place API packages directly under the root namespace. However, multiple independent business units or product groups may share the root namespace of larger organizations. It is customary to subdivide the root namespace and give each independent unit full control over their own namespace. When the namespace is organized like this, place the API package directly under the namespace you control.
+[Simplicity] and [Consistency]. Developers like short API package names and ideally you should place API packages directly under the root namespace. However, multiple independent business units or product groups may share the root namespace of larger organizations. It is customary to subdivide the root namespace and give each independent unit full control over their own namespace. When the namespace is organized like this, place the API package directly under the namespace you control.
 
 When nobody is officially in charge of controlling the organization’s root namespace, insert a stable product or product family name between the root namespace and the API package. Don’t use the product’s external marketing name, over which you have no control. Use a generic dictionary term or a widely accepted industry concept which best describes your product.
 
@@ -595,7 +595,7 @@ If the API itself is the product, place the API package directly under the root 
 
 **Rationale:**
 
-[Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/). Developers scan the end of import statements to see what is being imported and expect API names to appear there, so it is important that API classes are imported from a package clearly identified with the name of the API.
+[Consistency]. Developers scan the end of import statements to see what is being imported and expect API names to appear there, so it is important that API classes are imported from a package clearly identified with the name of the API.
 
 If the API is broken up into several packages as suggested in [item 1.1.3](https://theamiableapi.com/2012/01/16/java-api-design-checklist#cl.item.1.1.3), these packages should be named appropriately and placed inside a package bearing the name of the API.
 
@@ -653,7 +653,7 @@ public class ApiClass {};
 
 **Rationale:**
 
-<[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/), [Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/), [Safety](https://theamiableapi.com/2011/10/12/api-design-best-practice-make-it-safe/), and [Evolution](https://theamiableapi.com/2011/10/18/api-design-best-practice-plan-for-evolution/). We want to help developers quickly skip implementation packages when searching for APIs. We also want to warn them when trying to import from off-limits implementation packages. We recommend the word “internal” placed either at or just below the level of the API. Using “impl” serves the same purpose, but “internal” sounds better and should be used for consistency.
+<[Simplicity], [Consistency], [Safety], and [Evolution]. We want to help developers quickly skip implementation packages when searching for APIs. We also want to warn them when trying to import from off-limits implementation packages. We recommend the word “internal” placed either at or just below the level of the API. Using “impl” serves the same purpose, but “internal” sounds better and should be used for consistency.
 
 You can use the refactoring feature of a modern IDE to rename implementation packages in existing code. Import statements will be adjusted in all source files. Changing the name of implementation packages should have no impact on external clients.
 
@@ -690,7 +690,7 @@ package com.company.product.other.stuff;
 
 **Rationale:**
 
-[Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/). Composite package names are hard to read because the Java language specification only allows lowercase characters in package names. While underscores are allowed, they are very rarely used in practice, their usage being inconsistent both with the standard Java library names and with the mixed case naming conventions of the other Java identifiers. We ask you to avoid composite package names entirely. Use a single word whenever possible or a well-chosen abbreviation. Remember that we always use fully qualified package names and there is often enough information to give otherwise ambiguous terms a more precise meaning. Consider also that the fully qualified package name can easily become quite long.
+[Consistency]. Composite package names are hard to read because the Java language specification only allows lowercase characters in package names. While underscores are allowed, they are very rarely used in practice, their usage being inconsistent both with the standard Java library names and with the mixed case naming conventions of the other Java identifiers. We ask you to avoid composite package names entirely. Use a single word whenever possible or a well-chosen abbreviation. Remember that we always use fully qualified package names and there is often enough information to give otherwise ambiguous terms a more precise meaning. Consider also that the fully qualified package name can easily become quite long.
 
 **Do this:**
 
@@ -750,7 +750,7 @@ public class Scheduler {};  // What is a scheduler?
 
 **Rationale:**
 
-[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/) and [Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/). Callers import mostly APIs. The consistent use of the word “api” would make it redundant, as shown in the example below. This is why none of the core Java APIs has “api” in its package name. For consistency, we should follow the same convention.
+[Simplicity] and [Consistency]. Callers import mostly APIs. The consistent use of the word “api” would make it redundant, as shown in the example below. This is why none of the core Java APIs has “api” in its package name. For consistency, we should follow the same convention.
 
 **Do this:**
 
@@ -807,25 +807,25 @@ package com.company.livelink;    //Brand name (Marketing)
 
 **Rationale:**
 
-[Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/) in [Documentation](https://theamiableapi.com/2011/11/01/api-design-best-practice-write-helpful-documentation/). Javadoc is the standard format for Java reference documentation. Developers expect to find Javadoc description of every single Java construct, including packages. Unlike classes and methods which can be documented using javadoc comments inserted directly into Java source files, you need to create a separate package-info.java (or package.html) file and place it into the package directory. Omitting to provide Javadoc documentation for packages is one of the most common Java documentation mistakes.
+[Consistency] in [Documentation](https://theamiableapi.com/2011/11/01/api-design-best-practice-write-helpful-documentation/). Javadoc is the standard format for Java reference documentation. Developers expect to find Javadoc description of every single Java construct, including packages. Unlike classes and methods which can be documented using javadoc comments inserted directly into Java source files, you need to create a separate package-info.java (or package.html) file and place it into the package directory. Omitting to provide Javadoc documentation for packages is one of the most common Java documentation mistakes.
 
 ### 1.3.2. **Follow** standard Javadoc conventions
 
 **Rationale:**
 
-[Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/) in [Documentation](https://theamiableapi.com/2011/11/01/api-design-best-practice-write-helpful-documentation/). Simply follow the [Javadoc conventions](http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html) established by Oracle (Sun).
+[Consistency] in [Documentation](https://theamiableapi.com/2011/11/01/api-design-best-practice-write-helpful-documentation/). Simply follow the [Javadoc conventions](http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html) established by Oracle (Sun).
 
 ### 1.3.3. **Begin** with a short, one sentence summary of the API
 
 **Rationale:**
 
-[Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/) in [Documentation](https://theamiableapi.com/2011/11/01/api-design-best-practice-write-helpful-documentation/). The Javadoc tool automatically copies the first sentence of the provided package overview to the package summary. Write a clear and informative initial sentence which can stand on its own. Focus on the purpose and intended use of the package. Developers use package summaries to decide which packages are relevant to their current task and which packages can be safely skipped.
+[Consistency] in [Documentation](https://theamiableapi.com/2011/11/01/api-design-best-practice-write-helpful-documentation/). The Javadoc tool automatically copies the first sentence of the provided package overview to the package summary. Write a clear and informative initial sentence which can stand on its own. Focus on the purpose and intended use of the package. Developers use package summaries to decide which packages are relevant to their current task and which packages can be safely skipped.
 
 ### 1.3.4. **Provide** enough details to help deciding if and how to use the API
 
 **Rationale:**
 
-[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/) and [Documentation](https://theamiableapi.com/2011/11/01/api-design-best-practice-write-helpful-documentation/). Developers will look at a package overview primarily to decide whether the API is worth further investigation. Consequently, a good package overview starts by answering in less than half a page of text the following questions: 1) Can this API solve my problem? 2) What will the solution look like, roughly?
+[Simplicity] and [Documentation](https://theamiableapi.com/2011/11/01/api-design-best-practice-write-helpful-documentation/). Developers will look at a package overview primarily to decide whether the API is worth further investigation. Consequently, a good package overview starts by answering in less than half a page of text the following questions: 1) Can this API solve my problem? 2) What will the solution look like, roughly?
 
 **Do this:**
 
@@ -880,7 +880,7 @@ _Details coming soon…_
 
 **Rationale:**
 
-[Evolution](https://theamiableapi.com/2011/10/18/api-design-best-practice-plan-for-evolution/). A change in minor version number indicates backwards-compatible API extensions and enhancements, while a change in the major version number indicates an extensive API overhaul which may include non-backwards compatible changes. Modifications are typically required in existing clients to make them work with a new major API version, hence the importance of including the @version tag indicating the version number into the package overview section of the Javadoc.
+[Evolution]. A change in minor version number indicates backwards-compatible API extensions and enhancements, while a change in the major version number indicates an extensive API overhaul which may include non-backwards compatible changes. Modifications are typically required in existing clients to make them work with a new major API version, hence the importance of including the @version tag indicating the version number into the package overview section of the Javadoc.
 
 ### 1.3.11. **Indicate** deprecated API versions with the @deprecated tag
 
@@ -914,7 +914,7 @@ _Details coming soon…_
 
 **Rationale:**
 
-[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/). Each additional type increases the size of APIs, making them harder to learn and remember. The conceptual complexity of use cases and scenarios also increases when more types are used. The overall quality of APIs suffers, unless the concrete, measurable benefits added by the type compensate for the increased size and complexity. Everything else being equal, fewer types are better.
+[Simplicity]. Each additional type increases the size of APIs, making them harder to learn and remember. The conceptual complexity of use cases and scenarios also increases when more types are used. The overall quality of APIs suffers, unless the concrete, measurable benefits added by the type compensate for the increased size and complexity. Everything else being equal, fewer types are better.
 
 **Do this:**
 
@@ -1000,7 +1000,7 @@ _Details coming soon…_
 
 **Rationale:**
 
-[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/) and [Evolution](https://theamiableapi.com/2011/10/18/api-design-best-practice-plan-for-evolution/). You can significantly simplify APIs by capturing common behavior to allow for uniform processing across different types. Commonalities are expressed in Java using either interfaces or class inheritance. Interfaces and class inheritance have different advantages and disadvantages and it is very important to know when to use which.
+[Simplicity] and [Evolution]. You can significantly simplify APIs by capturing common behavior to allow for uniform processing across different types. Commonalities are expressed in Java using either interfaces or class inheritance. Interfaces and class inheritance have different advantages and disadvantages and it is very important to know when to use which.
 
 Abstract superclasses provide more powerful support for expressing commonalities and we talk about these in [item 2.1.8](#218-favor-abstract-classes-over-interfaces-for-decoupling-api-from-implementation). Unfortunately, Java limits you a single superclass per type, which prevents you from capturing several commonalities relating to different aspects in a complex API. Even if you don’t need to capture multiple aspects of common behavior in the first relese of the API, such requirements may appear in successive API releases. Adding new interfaces to existing classes is relatively easy. Modifying the class inheritance hierarchy without breaking backward compatibility can be quite difficult. It is this potential need to express several new comonalities in the future which makes interfaces a better choice for expressing simple commonalities.
 
@@ -1008,7 +1008,7 @@ Abstract superclasses provide more powerful support for expressing commonalities
 
 **Rationale:**
 
-[Safety](https://theamiableapi.com/2011/10/12/api-design-best-practice-make-it-safe/) and [Evolution](https://theamiableapi.com/2011/10/18/api-design-best-practice-plan-for-evolution/). Abstract classes can be used everywhere Java interfaces can with the limitation that a class can only extend a single (abstract) superclass while it can implement multiple interfaces. In most APIs Java’s lack of support for multiple class inheritance is not an issue because the interfaces are not intended to be implemented by clients. In these cases abstract classes are the better design choice.
+[Safety] and [Evolution]. Abstract classes can be used everywhere Java interfaces can with the limitation that a class can only extend a single (abstract) superclass while it can implement multiple interfaces. In most APIs Java’s lack of support for multiple class inheritance is not an issue because the interfaces are not intended to be implemented by clients. In these cases abstract classes are the better design choice.
 
 In Java you cannot prevent clients from implementing public interfaces. When you use an interface for a method parameter type, the compiler only guarantees that it implements the correct method signatures; you can never be sure it also implements the correct behavior. You are left with only two choices: either you perform extensive runtime checks or blindly trust the implementation, risking serious consequences, such as data corruption. Unlike interfaces, abstract classes can have code to enforce constraints on behavior. For example, you can prevent clients from extending abstract classes, check preconditions, verify postconditions, and guarantee invariants as illustrated by the examples bellow. You cannot do any of these with interfaces.
 
@@ -1097,7 +1097,7 @@ _Details coming soon…_
 
 **Rationale:**
 
-[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/) and [Safety](https://theamiableapi.com/2011/10/12/api-design-best-practice-make-it-safe/). Generic types are safer and easier to use than types which require casts in client code. In addition to increased complexity, casts may throw ClassCastException at runtime, introducing an additional failure mode. When you design new API types, try to make sure that they can be used without such casts. When the main difference between API types is the type of data they operate on, it may be possible to replace them with a single, generic type. For safety, consider restricting the permissible value of the type parameter of the generic parameter.
+[Simplicity] and [Safety]. Generic types are safer and easier to use than types which require casts in client code. In addition to increased complexity, casts may throw ClassCastException at runtime, introducing an additional failure mode. When you design new API types, try to make sure that they can be used without such casts. When the main difference between API types is the type of data they operate on, it may be possible to replace them with a single, generic type. For safety, consider restricting the permissible value of the type parameter of the generic parameter.
 
 **Exceptions:**
 
@@ -1150,13 +1150,13 @@ _Details coming soon…_
 
 **Rationale:**
 
-[Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/). This is a long-established Java convention.
+[Consistency]. This is a long-established Java convention.
 
 ### 2.2.3. **Capitalize** only the first letter of acronyms
 
 **Rationale:**
 
-[Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/). PascalCasing is the Java capitalization convention for type names and acronyms should be considered words, not individual letters. This way of capitalizing acronyms is widely used in SDK type names like [AclEntry](http://download.oracle.com/javase/6/docs/api/java/security/acl/AclEntry.html), [CipherSpi](http://download.oracle.com/javase/6/docs/api/javax/crypto/CipherSpi.html), [Clob](http://download.oracle.com/javase/6/docs/api/java/sql/Clob.html), [HttpRetryException](http://download.oracle.com/javase/6/docs/api/java/net/HttpRetryException.html), or [XmlSchema](http://download.oracle.com/javase/6/docs/api/javax/xml/bind/annotation/XmlSchema.html).
+[Consistency]. PascalCasing is the Java capitalization convention for type names and acronyms should be considered words, not individual letters. This way of capitalizing acronyms is widely used in SDK type names like [AclEntry](http://download.oracle.com/javase/6/docs/api/java/security/acl/AclEntry.html), [CipherSpi](http://download.oracle.com/javase/6/docs/api/javax/crypto/CipherSpi.html), [Clob](http://download.oracle.com/javase/6/docs/api/java/sql/Clob.html), [HttpRetryException](http://download.oracle.com/javase/6/docs/api/java/net/HttpRetryException.html), or [XmlSchema](http://download.oracle.com/javase/6/docs/api/javax/xml/bind/annotation/XmlSchema.html).
 
 That being said, this is one of those cases where the Java SDK itself is inconsistent, a fact best illustrated with the type name [HttpURLConnection](http://download.oracle.com/javase/6/docs/api/java/net/HttpURLConnection.html). For a long time, there was no established Java convention for capitalizing acronyms and each team chose either one or the other. If you judge it based on how many times it appears in SDK names, it looks like all uppercase is the way to go. However, this is not the case. Capitalizing only the first letter is now the Java convention, being used consistently across the newer SDK packages. HttpURLConnection perfectly illustrates the superiority of the mixed case approach: HttpUrlConnection works just fine, HTTPURLConnection is rather hard to read.
 
@@ -1190,7 +1190,7 @@ When adding a new type to an existing package which _consistently_ uses all uppe
 
 **Rationale:**
 
-[Naming](https://theamiableapi.com/2011/09/21/api-design-best-practice-naming/), [Behavior](https://theamiableapi.com/2011/09/27/api-design-best-practice-specify-the-behavior/) and [Safety](https://theamiableapi.com/2011/10/12/api-design-best-practice-make-it-safe/). Callers make a series of assumptions based on type names. For example, if you call a type a Set, callers will assume that it cannot contain duplicate elements. If you call it an Image, they will assume that its content can be represented using popular image formats like JPEG or PNG. Callers will look for a method which returns the amount of money in an Account. If reasonable assumptions about the purpose, use, and behavior of a type are incorrect, the name is inaccurate. Ask people who did not participate in the API design but are familiar with the intended application domain to review your type names for accuracy.
+[Naming](https://theamiableapi.com/2011/09/21/api-design-best-practice-naming/), [Behavior](https://theamiableapi.com/2011/09/27/api-design-best-practice-specify-the-behavior/) and [Safety]. Callers make a series of assumptions based on type names. For example, if you call a type a Set, callers will assume that it cannot contain duplicate elements. If you call it an Image, they will assume that its content can be represented using popular image formats like JPEG or PNG. Callers will look for a method which returns the amount of money in an Account. If reasonable assumptions about the purpose, use, and behavior of a type are incorrect, the name is inaccurate. Ask people who did not participate in the API design but are familiar with the intended application domain to review your type names for accuracy.
 
 ### 2.2.5. **Reserve** the shortest, most memorable name for the most frequently used type
 
@@ -1200,13 +1200,13 @@ _Details coming soon…_
 
 **Rationale:**
 
-[Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/). This is a long-established Java convention.
+[Consistency]. This is a long-established Java convention.
 
 ### 2.2.7. **Use** singular nouns (Color, not Colors) for naming enumerated types
 
 **Rationale:**
 
-[Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/). This is a long-established Java convention.
+[Consistency]. This is a long-established Java convention.
 
 ### 2.2.8. **Consider** longer names
 
@@ -1252,7 +1252,7 @@ _Details coming soon…_
 
 **Rationale:**
 
-[Consistency](https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/) and [Naming](https://theamiableapi.com/2011/09/21/api-design-best-practice-naming/). Starting the name of abstract classes with the word “Abstract” is an established Java convention with many examples in the Java SDK. However, whether you should start an abstract class name with “Abstract” or not in your API depends on the purpose of the class. If you include abstract classes for callers to extend, you should follow this naming convention, as shown in the first example. However, when you use abstract classes in method signatures (see [item 2.1.8](https://theamiableapi.com/2012/01/16/java-api-design-checklist#cl.item.2.1.8).), whether these classes are abstract or not is much less relevant. In such cases, abstract classes should be named like concrete classes or interfaces, without including “Abstract” in the class name, as shown in the second example.
+[Consistency] and [Naming](https://theamiableapi.com/2011/09/21/api-design-best-practice-naming/). Starting the name of abstract classes with the word “Abstract” is an established Java convention with many examples in the Java SDK. However, whether you should start an abstract class name with “Abstract” or not in your API depends on the purpose of the class. If you include abstract classes for callers to extend, you should follow this naming convention, as shown in the first example. However, when you use abstract classes in method signatures (see [item 2.1.8](https://theamiableapi.com/2012/01/16/java-api-design-checklist#cl.item.2.1.8).), whether these classes are abstract or not is much less relevant. In such cases, abstract classes should be named like concrete classes or interfaces, without including “Abstract” in the class name, as shown in the second example.
 
 **Do this:**
 
@@ -1379,7 +1379,7 @@ _Details coming soon…_
 
 #### Rationale:
 
-[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/). Implementation details are of no interest to callers. It is easier to ignore private or protected methods and fields if public methods are listed first in source code. The practice of listing (private) fields first, while widespread in implementation code, should not be used in public APIs.
+[Simplicity]. Implementation details are of no interest to callers. It is easier to ignore private or protected methods and fields if public methods are listed first in source code. The practice of listing (private) fields first, while widespread in implementation code, should not be used in public APIs.
 
 ### 2.3.3. **Declare** implementation methods private
 
@@ -1411,7 +1411,7 @@ _Details coming soon…_
 
 #### Rationale:
 
-[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/). The simplest way to instantiate types in Java is with a no-parameter default constructor. Developers often prefer to instantiate and experiment with individual types before wiring them together. The ability to defer connecting types is also useful in scenarios like lazy initialization, reflection, custom serialization, persisting objects in relational databases, or caching. Constructors which take instances of other types as parameters have the disadvantage of imposing a strict ordering on type instantiation and can make certain scenarios harder to implement.
+[Simplicity]. The simplest way to instantiate types in Java is with a no-parameter default constructor. Developers often prefer to instantiate and experiment with individual types before wiring them together. The ability to defer connecting types is also useful in scenarios like lazy initialization, reflection, custom serialization, persisting objects in relational databases, or caching. Constructors which take instances of other types as parameters have the disadvantage of imposing a strict ordering on type instantiation and can make certain scenarios harder to implement.
 
 #### Exceptions:
 
@@ -1427,7 +1427,7 @@ Default constructors may be unnecessary if you need to set all the missing param
 
 #### Rationale:
 
-[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/). The Comparable interface makes it simpler for callers to order (sort) instances of a class. Objects which implement Comparator can be stored in ordered Java collections like [SortedMap](http://download.oracle.com/javase/6/docs/api/java/util/SortedMap.html) or [SortedSet](http://download.oracle.com/javase/6/docs/api/java/util/SortedSet.html) without providing a custom [Comparator](http://download.oracle.com/javase/6/docs/api/java/util/Comparator.html). From the [perspective of the caller](https://theamiableapi.com/2011/08/29/considering-the-perspective-of-the-caller/), there are no disadvantages of implementing Comparable; every class for which a meaningful natural (default) ordering exist can implement it.
+[Simplicity]. The Comparable interface makes it simpler for callers to order (sort) instances of a class. Objects which implement Comparator can be stored in ordered Java collections like [SortedMap](http://download.oracle.com/javase/6/docs/api/java/util/SortedMap.html) or [SortedSet](http://download.oracle.com/javase/6/docs/api/java/util/SortedSet.html) without providing a custom [Comparator](http://download.oracle.com/javase/6/docs/api/java/util/Comparator.html). From the [perspective of the caller](https://theamiableapi.com/2011/08/29/considering-the-perspective-of-the-caller/), there are no disadvantages of implementing Comparable; every class for which a meaningful natural (default) ordering exist can implement it.
 
 #### Do this:
 
@@ -1474,7 +1474,7 @@ Collections.sort(list, new ClientDefinedApiClassComparator());  //list ordered A
 
 #### Rationale:
 
-[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/). [Java serialization](http://java.sun.com/developer/technicalArticles/Programming/serialization/) is useful for persisting class instances or transferring them across process and class loader boundaries using Java RMI. From the [perspective of the caller](https://theamiableapi.com/2011/08/29/considering-the-perspective-of-the-caller/), there are no disadvantages of implementing [java.io.Serializable](http://download.oracle.com/javase/6/docs/api/java/io/Serializable.html), even if you don’t anticipate the need for it. If you implement Serializable, always make sure (test) that all the class’ internal state is serialized correctly.
+[Simplicity]. [Java serialization](http://java.sun.com/developer/technicalArticles/Programming/serialization/) is useful for persisting class instances or transferring them across process and class loader boundaries using Java RMI. From the [perspective of the caller](https://theamiableapi.com/2011/08/29/considering-the-perspective-of-the-caller/), there are no disadvantages of implementing [java.io.Serializable](http://download.oracle.com/javase/6/docs/api/java/io/Serializable.html), even if you don’t anticipate the need for it. If you implement Serializable, always make sure (test) that all the class’ internal state is serialized correctly.
 
 #### Do this:
 
@@ -1531,13 +1531,13 @@ _Details coming soon…_
 
 #### Rationale:
 
-[Safety](https://theamiableapi.com/2011/10/12/api-design-best-practice-make-it-safe/). You should either explicitly design for client extension or prevent it by declaring classes as final. Safe extension requires careful design: you need to think about which methods should be protected and which ones private; you need to think about which methods can be overridden and which ones cannot; you need to add additional error handling code to deal with the errors which may only appear in client implementations; you need to write additional tests. If you are not willing to spend the effort, ensure the safety of the API by declaring the class as final.
+[Safety]. You should either explicitly design for client extension or prevent it by declaring classes as final. Safe extension requires careful design: you need to think about which methods should be protected and which ones private; you need to think about which methods can be overridden and which ones cannot; you need to add additional error handling code to deal with the errors which may only appear in client implementations; you need to write additional tests. If you are not willing to spend the effort, ensure the safety of the API by declaring the class as final.
 
 ### 2.3.15. **Consider** preventing class instantiation by not providing a public constructor
 
 #### Rationale:
 
-[Simplicity](https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/), [Safety](https://theamiableapi.com/2011/10/12/api-design-best-practice-make-it-safe/), and [Behavior](https://theamiableapi.com/2011/09/27/api-design-best-practice-specify-the-behavior/). From the [perspective of the caller](https://theamiableapi.com/2011/08/29/considering-the-perspective-of-the-caller/) constructors are only useful when instances created are at least partially functional. For example, there is no point in creating instances of [java.sql.ResultSet](http://download.oracle.com/javase/6/docs/api/java/sql/ResultSet.html) representing the result of SQL queries without executing the queries themselves. You should indicate that properly initialized instances can be only obtained using the appropriate method calls by declaring the constructors package scoped, thus making them inaccessible to callers.
+[Simplicity], [Safety], and [Behavior](https://theamiableapi.com/2011/09/27/api-design-best-practice-specify-the-behavior/). From the [perspective of the caller](https://theamiableapi.com/2011/08/29/considering-the-perspective-of-the-caller/) constructors are only useful when instances created are at least partially functional. For example, there is no point in creating instances of [java.sql.ResultSet](http://download.oracle.com/javase/6/docs/api/java/sql/ResultSet.html) representing the result of SQL queries without executing the queries themselves. You should indicate that properly initialized instances can be only obtained using the appropriate method calls by declaring the constructors package scoped, thus making them inaccessible to callers.
 
 ### 2.3.16. **Consider** using custom types to enforce strong preconditions as class invariants
 
@@ -1547,7 +1547,7 @@ _Details coming soon…_
 
 #### Rationale:
 
-[Behavior](https://theamiableapi.com/2011/09/27/api-design-best-practice-specify-the-behavior/) and [Safety](https://theamiableapi.com/2011/10/12/api-design-best-practice-make-it-safe/). Instances of immutable classes cannot be modified. The internal state is fixed for the lifetime of the object. The core Java library contains several immutable classes, including [String](http://download.oracle.com/javase/6/docs/api/java/lang/String.html) and [BigInteger](http://download.oracle.com/javase/6/docs/api/java/math/BigInteger.html). Immutable classes are easier to use and less error prone than mutable classes. For example, immutable objects require no synchronization, being inherently thread safe. You can also share immutable instances between client code and implementation code, meaning that you can safely store immutable object references passed as method parameters and you can safely return references to internal immutable objects. If you are using mutable objects, you need to store and/or return a copy; otherwise the client may inadvertently change the state of the internal object. Compare for example the Java [String](http://download.oracle.com/javase/6/docs/api/java/lang/String.html) (immutable) and [Date](http://download.oracle.com/javase/6/docs/api/java/util/Date.html) (mutable) classes.
+[Behavior](https://theamiableapi.com/2011/09/27/api-design-best-practice-specify-the-behavior/) and [Safety]. Instances of immutable classes cannot be modified. The internal state is fixed for the lifetime of the object. The core Java library contains several immutable classes, including [String](http://download.oracle.com/javase/6/docs/api/java/lang/String.html) and [BigInteger](http://download.oracle.com/javase/6/docs/api/java/math/BigInteger.html). Immutable classes are easier to use and less error prone than mutable classes. For example, immutable objects require no synchronization, being inherently thread safe. You can also share immutable instances between client code and implementation code, meaning that you can safely store immutable object references passed as method parameters and you can safely return references to internal immutable objects. If you are using mutable objects, you need to store and/or return a copy; otherwise the client may inadvertently change the state of the internal object. Compare for example the Java [String](http://download.oracle.com/javase/6/docs/api/java/lang/String.html) (immutable) and [Date](http://download.oracle.com/javase/6/docs/api/java/util/Date.html) (mutable) classes.
 
 You make a class immutable by removing all methods which can change the internal state (for example, all set methods) and by declaring all internal fields as final. Instead of changing the class itself, methods should return a new instance of the class when required. There are obvious performance implications of doing this, so you won’t be able to make all API classes immutable. However, it is a good rule of thumb to make API classes immutable _unless_ there is a good reason why you should make them mutable. Even when you cannot make the whole class immutable, it is useful to make as much of the internal state immutable as possible.
 
@@ -1605,7 +1605,7 @@ _Details coming soon…_
 
 #### Rationale:
 
-[Safety](https://theamiableapi.com/2011/10/12/api-design-best-practice-make-it-safe/). Concrete API classes not designed for extensions should be declared as final to prevent clients from extending them (see [item 2.3.14](#2314-consider-declaring-the-class-as-final)). Certain abstract API classes aren’t designed for client extension either (see [item 2.1.8](https://theamiableapi.com/2012/01/16/java-api-design-checklist#cl.item.2.1.8)), but in Java it is illegal to declare a class both abstract and final. Fortunately, there is another way for preventing clients from extending abstract classes: by making all constructors package scoped. While clients can work around this technical limitation by placing their own classes in the API package, it is enough to make it clear that what they are doing is unsupported and unsafe.
+[Safety]. Concrete API classes not designed for extensions should be declared as final to prevent clients from extending them (see [item 2.3.14](#2314-consider-declaring-the-class-as-final)). Certain abstract API classes aren’t designed for client extension either (see [item 2.1.8](https://theamiableapi.com/2012/01/16/java-api-design-checklist#cl.item.2.1.8)), but in Java it is illegal to declare a class both abstract and final. Fortunately, there is another way for preventing clients from extending abstract classes: by making all constructors package scoped. While clients can work around this technical limitation by placing their own classes in the API package, it is enough to make it clear that what they are doing is unsupported and unsafe.
 
 ### 2.3.22. **Do not** require extensive initialization
 
@@ -1613,7 +1613,7 @@ _Details coming soon…_
 
 ### 2.5.5. **Do not** add new values to a released enumeration
 
-**Rationale**: [Evolution](https://theamiableapi.com/2011/10/18/api-design-best-practice-plan-for-evolution/)
+**Rationale**: [Evolution]
 
 You can switch over all *current* enum cases without supplying a `default` case.
 ```java
@@ -1643,3 +1643,8 @@ The `ExhaustiveEnumSwitch` will no longer compile.
 
 [![Creative Commons Licence](https://i0.wp.com/i.creativecommons.org/l/by-sa/2.5/ca/88x31.png)](http://creativecommons.org/licenses/by-sa/2.5/ca/)  
 This work is licensed under a [Creative Commons Attribution-ShareAlike 2.5 Canada License](http://creativecommons.org/licenses/by-sa/2.5/ca/).
+
+[Consistency]: https://theamiableapi.com/2011/09/14/api-design-best-practice-consistency/
+[Evolution]: https://theamiableapi.com/2011/10/18/api-design-best-practice-plan-for-evolution/
+[Safety]: https://theamiableapi.com/2011/10/12/api-design-best-practice-make-it-safe/
+[Simplicity]: https://theamiableapi.com/2011/09/07/api-design-best-practice-keep-it-simple/

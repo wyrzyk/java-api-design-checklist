@@ -149,7 +149,7 @@ This list uses the following conventions:
 *   2.5.2. **Avoid** enumeration types with only one value
 *   2.5.3. **Do not** use enumeration types for open-ended sets of values
 *   2.5.4. **Do not** reserve enumeration values for future use
-*   2.5.5. **Do not** add new values to a released enumeration
+*   2.5.5. **Do not** add new values to a released enumeration [explain](#255-do-not-add-new-values-to-a-released-enumeration)
 
 ### 2.6. Exceptions
 
@@ -1610,6 +1610,36 @@ _Details coming soon…_
 ### 2.3.22. **Do not** require extensive initialization
 
 _Details coming soon…_
+
+### 2.5.5. **Do not** add new values to a released enumeration
+
+**Rationale**: [Evolution](https://theamiableapi.com/2011/10/18/api-design-best-practice-plan-for-evolution/)
+
+You can switch over all *current* enum cases without supplying a `default` case.
+```java
+enum Letter {
+    ALPHA, BETA, GAMMA
+}
+
+class ExhaustiveEnumSwitch {
+
+    int score(Letter letter) {
+       return switch (letter) {
+            case ALPHA -> 3;
+            case BETA -> 5;
+            case GAMMA -> 6;
+       };
+    }
+}
+```
+
+Then if you add:
+```java
+enum Letter {
+    ALPHA, BETA, GAMMA, DELTA
+}
+```
+The `ExhaustiveEnumSwitch` will no longer compile.
 
 [![Creative Commons Licence](https://i0.wp.com/i.creativecommons.org/l/by-sa/2.5/ca/88x31.png)](http://creativecommons.org/licenses/by-sa/2.5/ca/)  
 This work is licensed under a [Creative Commons Attribution-ShareAlike 2.5 Canada License](http://creativecommons.org/licenses/by-sa/2.5/ca/).

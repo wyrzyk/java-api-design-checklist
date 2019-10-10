@@ -290,7 +290,7 @@ This list uses the following conventions:
 *   3.6.9. **Consider** a static factory method if you don’t always need a new instance
 *   3.6.10. **Consider** a static factory method if you need to decide the precise type of object at runtime
 *   3.6.11. **Consider** a static factory method if you need to access external resources
-*   3.6.12. **Consider** a builder when faced with many constructor parameters
+*   3.6.12. **Consider** a builder when faced with many constructor parameters [explain](#3612-consider-a-builder-when-faced-with-many-constructor-parameters)
 *   3.6.13. **Consider** private constructors to prevent direct class instantiation
 *   3.6.14. **Avoid** creating unnecessary objects
 *   3.6.15. **Avoid** finalizers
@@ -1640,6 +1640,39 @@ enum Letter {
 }
 ```
 The `ExhaustiveEnumSwitch` will no longer compile.
+
+## 3. Method Design Checklist
+
+### 3.6.12. **Consider** a builder when faced with many constructor parameters
+
+#### Rationale: [Evolution] [Simplicity]
+
+Telescoping constructors are hard to use to read and maintain. They are also error-prone, as it's easy to skip some
+combinations. The problem grows with the list of parameters, when we need to create a constructor for each combination.
+
+A builder can solve this problem.
+
+##### Builder
+
+Pros:
+ 
+ - no need for deprecation if we add a new required parameter
+ - fewer constructors to maintain
+ - less pain for the callers, because they no longer have to pick between different constructor signatures
+ - automatic support for all subsets of parameters rather than arbitrary ones
+ - single source of defaults
+ - a way distinguish different arrangements of parameters of the same type
+ - a sustainable approach to copy objects
+ 
+Cons:
+ 
+ - a bit more code to write
+
+References:
+
+ - Bloch, J. (2018). Effective Java. Boston: Addison-Wesley. (Item 2).
+ - [Learning effective java item 2](https://medium.com/@biratkirat/learning-effective-java-item-2-e06c9eee7d0)
+ - [JPERF-284](https://ecosystem.atlassian.net/browse/JPERF-284)
 
 [![Creative Commons Licence](https://i0.wp.com/i.creativecommons.org/l/by-sa/2.5/ca/88x31.png)](http://creativecommons.org/licenses/by-sa/2.5/ca/)  
 This work is licensed under a [Creative Commons Attribution-ShareAlike 2.5 Canada License](http://creativecommons.org/licenses/by-sa/2.5/ca/).

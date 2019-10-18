@@ -285,7 +285,7 @@ This list uses the following conventions:
 *   3.6.4. **Validate** constructor parameters
 *   3.6.5. **Name** constructor parameters the same as corresponding properties
 *   3.6.6. **Follow** the guidelines for method overloading when providing multiple constructors
-*   3.6.7. **Favor** constructors over static factory methods
+*   3.6.7. **Favor** static factory methods over constructors [explain](#367-favor-static-factory-methods-over-constructors)
 *   3.6.8. **Consider** a no parameter default constructor
 *   3.6.9. **Consider** a static factory method if you don’t always need a new instance
 *   3.6.10. **Consider** a static factory method if you need to decide the precise type of object at runtime
@@ -1642,6 +1642,26 @@ enum Letter {
 The `ExhaustiveEnumSwitch` will no longer compile.
 
 ## 3. Method Design Checklist
+
+### 3.6.7. **Favor** static factory methods over constructors
+
+#### Rationale: [Evolution] [Simplicity]
+
+Pros:
+ - static factory methods have names (names add meaning)
+ - static factory methods are not required to create a new object each time they’re invoked
+ - static factory methods can return an object of any subtype of their return type (API can return objects without
+  making their classes public)
+ - class of the returned object can vary from call to call as a function of the input parameters or between releases
+ - class of the returned object need not exist when the class containing the method is written (can be provided by SPI)
+ 
+ Cons:
+  - classes providing only static factory methods without public or protected constructors cannot be subclassed
+  
+References:
+
+ - Bloch, J. (2018). Effective Java. Boston: Addison-Wesley. (Item 1).
+ - Tulach, J. (2012). Practical Api design: confessions of a Java framework architect. Berkeley, Cal.: Apress. (Chapter 5)
 
 ### 3.6.12. **Consider** a builder when faced with many constructor parameters
 

@@ -48,7 +48,6 @@ This list uses the following conventions:
 *   1.2.6. **Avoid** using the same name for both package and class inside the package [explain](#126-avoid-using-the-same-name-for-both-package-and-class-inside-the-package)
 *   1.2.7. **Avoid** using “api” in package names [explain](#127-avoid-using-api-in-package-names)
 *   1.2.8. **Do not** use marketing, project, organizational unit or geographic location names [explain](#128-do-not-use-marketing-project-organizational-unit-or-geographic-location-names)
-*   1.2.9. **Do not** use uppercase characters in package names [explain](#129-do-not-use-uppercase-characters-in-package-names)
 
 ### 1.3. Documentation
 
@@ -798,10 +797,6 @@ package com.company.borg;        //Internal R&D project name
 package com.company.chicago;     //Team location
 package com.company.livelink;    //Brand name (Marketing)
 ```
-
-### 1.2.9. **Do not** use uppercase characters in package names
-
-**Rationale:**
 
 ### 1.3.1. **Provide** a package overview (package.html) for each package
 

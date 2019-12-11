@@ -1681,6 +1681,7 @@ Pros:
  
 Cons:
  
+ - forces cheap defaults, e.g. `Supplier<ExpensiveResource>` rather than `ExpensiveResource` 
  - a bit more code to write
 
 References:
